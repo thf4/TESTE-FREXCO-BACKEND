@@ -11,5 +11,6 @@ app.use(express.urlencoded({ extended: true }));
 
 /* Rotas */
 app.use("/", product);
+app.use("/")
 require("./Routers/router")(app);
 app.listen(3000);
