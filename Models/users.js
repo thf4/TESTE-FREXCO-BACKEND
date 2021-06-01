@@ -17,25 +17,23 @@ const UsersSchema = new mongoose.Schema({
     type: Number,
     require: true,
   },
-  city: {
-    type: String,
-    require: true,
-  },
   adress: {
-    type: String,
-    require: true,
-  },
-  zip: {
-    type: Number,
-    require: true,
-  },
-  number: {
-    type: Number,
-    require: true,
-  },
-  complement: {
-    type: String,
-    require: true,
+    city: {
+      type: String,
+      require: true,
+    },
+    zip: {
+      type: Number,
+      require: true,
+    },
+    number: {
+      type: Number,
+      require: true,
+    },
+    complement: {
+      type: String,
+      require: true,
+    },
   },
   password: {
     type: String,
