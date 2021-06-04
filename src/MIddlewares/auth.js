@@ -12,8 +12,8 @@ const auth = (req, res, next) => {
       next();
     }
   } catch {
-    res.status(401).json({
-      error: new Error("Invalid request!"),
+    return res.status(401).json({
+      message: "Invalid request!",
     });
   }
 };
