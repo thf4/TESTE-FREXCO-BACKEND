@@ -7,13 +7,27 @@ const Product = require("../Models/product");
 /* Create New Products */
 router.post("/user/:_id/product", auth, async (req, res) => {
   const { body = {} } = req;
-  const { name, description, price, qty } = body;
+  const { name, description, price, qty, image } = body;
+  if (!name) {
+    return res.status(401).json({ message: "Digite um nome !" });
+  }
+  if (!description)
+    return res
+      .status(401)
+      .json({ message: "Digite uma descrição do produto !" });
+  if (!price)
+    return res.status(401).json({ message: "Digite o preço produto !" });
+  if (!qty)
+    return res
+      .status(401)
+      .json({ message: "Digite a quantidade do produto que você possui!" });
   try {
     const product = await Product.create({
       name,
       description,
       price,
       qty,
+      image,
     });
     product.save();
     return res.status(200).json({ message: "Produto criado com sucesso!" });
@@ -25,13 +39,14 @@ router.post("/user/:_id/product", auth, async (req, res) => {
 /* Edit Products */
 router.put("/user/:_id/product/:_id", auth, async (req, res) => {
   const { body = {} } = req;
-  const { name, description, price, qty } = body;
+  const { name, description, price, qty, image } = body;
   try {
     const product = await Product.findByIdAndUpdate(req.params._id, {
       name,
       description,
       price,
       qty,
+      image,
     });
     product.save();
     return res.status(200).json({ message: "Produto editado com sucesso!" });

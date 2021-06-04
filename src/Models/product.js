@@ -11,6 +11,7 @@ const ProductSchema = new mongoose.Schema({
   },
   price: {
     type: Number,
+    type: String,
     require: true,
   },
   qty: {
@@ -19,7 +20,7 @@ const ProductSchema = new mongoose.Schema({
   },
   image: {
     type: String,
-    require: true,
+    require: false,
   },
 });
 

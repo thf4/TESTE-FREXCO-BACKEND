@@ -37,6 +37,14 @@ const UsersSchema = new mongoose.Schema({
     type: Number,
     require: true,
   },
+  district: {
+    type: Number,
+    require: true,
+  },
+  state: {
+    type: Number,
+    require: true,
+  },
   complement: {
     type: String,
     require: true,
