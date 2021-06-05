@@ -12,7 +12,8 @@ router.post("/user/:_id/cart", auth, async (req, res) => {
     const response = await Cart.create({
       ...product,
       user: _id,
-      status: "pending",
+      status: "Pending",
+      qtyPro,
     });
     response.save();
     return res.status(201).json({ message: "Adicionado com sucesso!" });
@@ -20,6 +21,18 @@ router.post("/user/:_id/cart", auth, async (req, res) => {
     return res.status(401).json({ message: "Erro ao criar carrinho!" });
   }
 });
+
+router.get("/user/:_id/cart/:_id", auth, async (req, res) => {
+  const { _id } = req.params;
+  try {
+    const response = await Cart.findById(_id).lean().populate("product");
+
+    return res.status(201).json(response);
+  } catch (err) {
+    return res.status(401).json({ message: "Erro ao finalizar!" });
+  }
+});
+
 router.put("/user/:_id/cart/:_id", auth, async (req, res) => {
   const { body = {} } = req;
   const { status } = body;

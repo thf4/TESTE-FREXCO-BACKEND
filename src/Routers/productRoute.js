@@ -5,7 +5,7 @@ const auth = require("../MIddlewares/auth");
 const Product = require("../Models/product");
 
 /* Create New Products */
-router.post("/user/:_id/product", auth, async (req, res) => {
+router.post("/product", auth, async (req, res) => {
   const { body = {} } = req;
   const { name, description, price, qty, image } = body;
   if (!name) {
@@ -37,7 +37,7 @@ router.post("/user/:_id/product", auth, async (req, res) => {
 });
 
 /* Edit Products */
-router.put("/user/:_id/product/:_id", auth, async (req, res) => {
+router.put("/product/:_id", auth, async (req, res) => {
   const { body = {} } = req;
   const { name, description, price, qty, image } = body;
   try {
@@ -66,7 +66,7 @@ router.get("/product", async (req, res) => {
 });
 
 /* Deleted Product */
-router.delete("/user/:_id/product/:_id", auth, async (req, res) => {
+router.delete("/product/:_id", auth, async (req, res) => {
   try {
     await Product.findByIdAndDelete(req.params._id).lean();
     return res.status(201).json({ message: "Deletado com sucesso! " });

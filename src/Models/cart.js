@@ -13,6 +13,10 @@ const CartSchema = new mongoose.Schema({
       require: true,
     },
   ],
+  qtyPro: {
+    type: String,
+    require: true,
+  },
   status: {
     type: String,
   },
