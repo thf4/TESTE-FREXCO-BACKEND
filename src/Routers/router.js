@@ -74,25 +74,52 @@ router.post("/cadastrar", async (req, res) => {
 router.put("/user/:_id", auth, async (req, res) => {
   const { body = {} } = req;
   const { _id } = req.params;
-  const { name, surname, email, password } = body;
+  const {
+    name,
+    surname,
+    email,
+    cpf,
+    nameAd,
+    address,
+    zip,
+    city,
+    complement,
+    telephone,
+    cellphone,
+    district,
+    number,
+    state,
+  } = body;
 
-  if (!password || password.length < 5)
+  if (!cpf || !/(\d{3})(\d{3})(\d{3})(\d{2})/.test(cpf) || cpf.length <= 8)
     return res
       .status(401)
-      .json({ message: "Digite uma senha com 5 caracteres ou mais " });
+      .json({ message: "Digite um cpf valido, apenas números! " });
+  if (!zip || !/(\d{3})(\d{3})(\d{2})/.test(zip) || zip.length <= 6)
+    return res
+      .status(401)
+      .json({ message: "Digite o cep com apenas números! " });
 
   try {
-    const response = await User.findOneAndUpdate(
+    const response = await User.findByIdAndUpdate(
       { _id },
       {
         name,
         surname,
         email,
-        password,
+        city,
+        nameAd,
+        address,
+        cpf,
+        number,
+        zip,
+        complement,
+        telephone,
+        cellphone,
+        district,
+        state,
       }
     );
-    const hash = bcrypt.hashSync(password, 10);
-    response.password = hash;
     response.save();
     return res.json({ message: "Atualizado com sucesso " });
   } catch (err) {

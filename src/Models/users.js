@@ -14,7 +14,7 @@ const UsersSchema = new mongoose.Schema({
     require: true,
   },
   cpf: {
-    type: Number,
+    type: String,
     require: true,
   },
   nameAd: {
@@ -30,7 +30,7 @@ const UsersSchema = new mongoose.Schema({
     require: true,
   },
   zip: {
-    type: Number,
+    type: String,
     require: true,
   },
   number: {
@@ -38,11 +38,11 @@ const UsersSchema = new mongoose.Schema({
     require: true,
   },
   district: {
-    type: Number,
+    type: String,
     require: true,
   },
   state: {
-    type: Number,
+    type: String,
     require: true,
   },
   complement: {
