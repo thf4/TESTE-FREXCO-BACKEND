@@ -55,10 +55,19 @@ router.put("/product/:_id", auth, async (req, res) => {
   }
 });
 
-/* Listen Products */
-router.get("/product", async (req, res) => {
+/* Products */
+router.get("/product/", async (req, res) => {
   try {
     const response = await Product.find().populate("product");
+    return res.status(200).json(response);
+  } catch (err) {
+    return res.status(400).json({ message: "Erro ao listar produtos!" });
+  }
+});
+
+router.get("/product/:_id", async (req, res) => {
+  try {
+    const response = await Product.findById(req.params._id);
     return res.status(200).json(response);
   } catch (err) {
     return res.status(400).json({ message: "Erro ao listar produtos!" });

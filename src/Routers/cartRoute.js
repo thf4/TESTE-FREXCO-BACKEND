@@ -5,30 +5,41 @@ const Cart = require("../Models/cart");
 const auth = require("../MIddlewares/auth");
 const Product = require("../Models/product");
 
-router.post("/user/:_id/cart", auth, async (req, res) => {
-  const { body = {} } = req;
-  const { qty, qtyPro } = body;
-  const { _id } = req.params;
-  const { ...product } = req.body;
-  const stock = Product.find({ qty: qty });
-
-  if (stock === 0) {
-    return res.status(401).json({ message: "Produto indisponivel !" });
-  }
-
+router.post("/cart", auth, async (req, res) => {
   try {
-    const response = await Cart.create({
-      ...product,
-      user: _id,
-      status: "Finalizado",
-      qtyPro,
+    const { body = {} } = req;
+    const { user, product } = body;
+    const prodIds = product.map(({ productId }) => productId);
+    const products = await Product.find({ _id: { $in: prodIds } });
+    let hasStock = true;
+    let index = null;
+    let updateQuery = [];
+    products.forEach((p, i) => {
+      const prod = product.find((e) => e.productId === p._doc._id.toString());
+      if (prod) updateQuery.push({ _id: p._doc._id, qty: p._doc.qty - prod.count });
+      if (prod && prod.count > p._doc.qty) {
+        index = i;
+        hasStock = false;
+      }
     });
-
-    stock;
-    response.save();
-    return res.status(201).json({ message: "Adicionado com sucesso!" });
+    if (hasStock) {
+      for (let i = 0; i < updateQuery.length; i++) {
+        const element = updateQuery[i];
+        await Product.updateOne({ _id: element._id }, { qty: element.qty });
+      }
+      const response = await Cart.create({
+        user,
+        product,
+        status: "Finalizado",
+      });
+      response.save();
+      return res.status(201).json(response);
+    }
+    return res
+      .status(400)
+      .json({ message: "Produto sem estoque!", product: products[index] });
   } catch (err) {
-    return res.status(401).json({ message: "Erro ao criar carrinho!" });
+    return res.status(500).json({ message: "Erro inesperado!" });
   }
 });
 

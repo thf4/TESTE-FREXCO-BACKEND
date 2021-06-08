@@ -8,15 +8,17 @@ const CartSchema = new mongoose.Schema({
   },
   product: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Product",
-      require: true,
+      count: {
+        type: Number,
+        require: true,
+      },
+      productId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Product",
+        require: true,
+      },
     },
   ],
-  qtyPro: {
-    type: String,
-    require: true,
-  },
   status: {
     type: String,
   },
