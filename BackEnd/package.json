@@ -1,0 +1,29 @@
+{
+ "dependencies": {
+  "bcrypt": "^5.0.1",
+  "cors": "^2.8.5",
+  "dotenv": "^10.0.0",
+  "express": "^4.17.1",
+  "jsonwebtoken": "^8.5.1",
+  "mongoose": "^5.13.0",
+  "nodemon": "^2.0.7"
+ },
+ "name": "frexco-backend",
+ "version": "1.0.0",
+ "main": "index.js",
+ "scripts": {
+  "test": "echo \"Error: no test specified\" && exit 1",
+  "start": "yarn nodemon"
+ },
+ "repository": {
+  "type": "git",
+  "url": "git+https://github.com/thf4/TESTE-FREXCO-BACKEND.git"
+ },
+ "author": "",
+ "license": "ISC",
+ "bugs": {
+  "url": "https://github.com/thf4/TESTE-FREXCO-BACKEND/issues"
+ },
+ "homepage": "https://github.com/thf4/TESTE-FREXCO-BACKEND#readme",
+ "description": ""
+}

@@ -1,0 +1,26 @@
+version: "3"
+services:
+ api:
+  build:
+    environment: 
+      - MONGO_URI=mongodb:27017/app
+      mongodb:
+        image: "mongo"
+        restart: always
+        volumes:
+        - /data/mongodb/db:/data/db
+        ports:
+        - "27017:27017"
+
+      node:
+        dockerfile: ./Docker/frexco.dockerfile
+        context: .
+        image: thalesf/frexco
+        container_name: frexco1
+        volumes:
+        - ./:/home/node/app
+        restart: always
+        ports:
+        - "3000"
+        depends_on:
+        - "mongodb"

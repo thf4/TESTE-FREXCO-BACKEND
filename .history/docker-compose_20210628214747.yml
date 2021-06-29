@@ -1,0 +1,38 @@
+version: "3"
+services:
+ mongodb:
+  image: bitnami/mongodb:latest
+  container_name: mongodb
+  restart: always
+  environment:
+   MONGO_INITDB_ROOT_USERNAME: root
+   MONGO_INITDB_ROOT_PASSWORD: 3268
+   MONGO_INITDB_DATABASE: Frexco
+  networks:
+   - backend
+  ports:
+   - "27017:27017"
+
+ node:
+  build:
+   dockerfile: ./Docker/frexco.dockerfile
+   context: .
+  container_name: frexco
+  volumes:
+   - ./BackEnd:/home/app
+  restart: always
+  environment:
+   NODE_ENV: development
+   MONGODB: 127.0.0.1:27017
+   MONGODB_USER: root
+   MONGODB_PASS: 3268
+  ports:
+   - "3000:3000"
+  depends_on:
+   - mongodb
+  networks:
+   - backend
+
+networks:
+ backend:
+  driver: bridge

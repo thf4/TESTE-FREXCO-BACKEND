@@ -1,0 +1,26 @@
+version: "3"
+services:
+  
+ mongodb:
+  image: "mongo"
+  restart: always
+  networks:
+   - production
+
+ node:
+  build:
+   dockerfile: ./Docker/frexco.dockerfile
+   context: .
+  image: thalesf/frexco
+  container_name: frexco1
+  restart: always
+  ports:
+   - "3000"
+  networks:
+   - production
+  depends_on:
+   - "mongodb"
+
+networks:
+ production:
+  driver: bridge
